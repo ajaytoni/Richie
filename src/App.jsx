@@ -788,7 +788,7 @@ export default function App() {
 
         .hero h1 {
           font-family: Georgia, serif;
-          font-size: clamp(38px, 4.8vw, 64px);
+          font-size: clamp(32px, 3.6vw, 50px);
           line-height: 1;
           max-width: 800px;
           margin: 0 0 20px;
@@ -1266,16 +1266,16 @@ export default function App() {
           border: 1px solid #e7dece;
           overflow: hidden;
           transition: transform 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease;
-          animation: facilityFloat 5.5s ease-in-out infinite;
+          animation: facilityFloat 3.8s ease-in-out infinite;
           will-change: transform;
         }
 
         .facility-card:nth-child(2n) {
-          animation-delay: -1.5s;
+          animation-delay: -1.1s;
         }
 
         .facility-card:nth-child(3n) {
-          animation-delay: -3s;
+          animation-delay: -2.2s;
         }
 
         .facility-card:hover {
@@ -1315,8 +1315,12 @@ export default function App() {
         }
 
         @keyframes facilityFloat {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-5px); }
+          0% { transform: translate3d(0, 0, 0) rotateZ(0deg) scale(1); }
+          20% { transform: translate3d(5px, -9px, 0) rotateZ(0.35deg) scale(1.008); }
+          40% { transform: translate3d(-4px, -16px, 0) rotateZ(-0.3deg) scale(1.014); }
+          60% { transform: translate3d(-7px, -9px, 0) rotateZ(-0.4deg) scale(1.008); }
+          80% { transform: translate3d(4px, -4px, 0) rotateZ(0.3deg) scale(1.004); }
+          100% { transform: translate3d(0, 0, 0) rotateZ(0deg) scale(1); }
         }
 
         .facility-content {
@@ -1353,29 +1357,28 @@ export default function App() {
 
         .gallery-item {
           position: relative;
-          height: 205px;
           overflow: hidden;
           cursor: pointer;
-          background: #222;
+          background: #fffdf8;
           border-radius: 12px;
           border: 1px solid rgba(183, 134, 53, 0.28);
           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.10);
           transform: translateY(0) rotateZ(0deg);
-          animation: galleryFloat 6s ease-in-out infinite;
+          animation: galleryFloat 3.9s ease-in-out infinite;
           transition: transform 0.55s cubic-bezier(.2,.8,.2,1), box-shadow 0.55s ease, border-color 0.35s ease;
           will-change: transform;
         }
 
         .gallery-item:nth-child(2n) {
-          animation-delay: -1.2s;
+          animation-delay: -0.9s;
         }
 
         .gallery-item:nth-child(3n) {
-          animation-delay: -2.4s;
+          animation-delay: -1.9s;
         }
 
         .gallery-item:nth-child(4n) {
-          animation-delay: -3.6s;
+          animation-delay: -2.9s;
         }
 
         .gallery-item::before {
@@ -1402,7 +1405,7 @@ export default function App() {
 
         .gallery-item img {
           width: 100%;
-          height: 100%;
+          height: 205px;
           object-fit: cover;
           transition: transform 0.8s cubic-bezier(.2,.7,.2,1), filter 0.55s ease;
         }
@@ -1413,50 +1416,52 @@ export default function App() {
         }
 
         @keyframes galleryFloat {
-          0%, 100% { transform: translateY(0) rotateZ(0deg); }
-          50% { transform: translateY(-7px) rotateZ(0.35deg); }
+          0% { transform: translate3d(0, 0, 0) rotateZ(0deg) scale(1); }
+          18% { transform: translate3d(6px, -8px, 0) rotateZ(0.45deg) scale(1.008); }
+          36% { transform: translate3d(-5px, -17px, 0) rotateZ(-0.55deg) scale(1.016); }
+          54% { transform: translate3d(-8px, -10px, 0) rotateZ(-0.7deg) scale(1.01); }
+          72% { transform: translate3d(5px, -4px, 0) rotateZ(0.5deg) scale(1.005); }
+          100% { transform: translate3d(0, 0, 0) rotateZ(0deg) scale(1); }
         }
 
-        .gallery-caption {
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          z-index: 3;
-          padding: 42px 15px 14px;
-          color: #fff;
-          font-weight: 700;
-          font-size: 14px;
-          background: linear-gradient(transparent, rgba(0, 0, 0, 0.88));
-          transform: translateY(5px);
-          transition: transform 0.45s ease;
-        }
-
-        .gallery-item:hover .gallery-caption {
-          transform: translateY(0);
+        .gallery-info {
+          position: relative;
+          padding: 14px 15px 16px;
+          background: #fffdf8;
+          color: #171717;
+          text-align: left;
+          transition: transform 0.4s ease, background 0.4s ease;
         }
 
         .gallery-caption-title {
           display: block;
-          color: #fff;
+          color: #171717;
+          font-family: Georgia, serif;
+          font-size: 17px;
+          font-weight: 600;
           letter-spacing: 0.2px;
+          margin-bottom: 5px;
         }
 
         .gallery-caption-text {
           display: block;
-          margin-top: 5px;
-          color: rgba(255,255,255,0.78);
-          font-size: 11px;
+          margin-top: 0;
+          color: #6c675f;
+          font-size: 12px;
           font-weight: 400;
-          line-height: 1.45;
-          transform: translateY(8px);
-          opacity: 0;
-          transition: opacity 0.45s ease, transform 0.45s ease;
+          line-height: 1.5;
+          opacity: 1;
+          transform: translateY(0);
+          transition: color 0.4s ease, transform 0.4s ease;
+        }
+
+        .gallery-item:hover .gallery-info {
+          background: #f7f4ed;
         }
 
         .gallery-item:hover .gallery-caption-text {
-          opacity: 1;
-          transform: translateY(0);
+          color: #8b6a36;
+          transform: translateY(-2px);
         }
 
         /* ==============================
@@ -1950,7 +1955,7 @@ export default function App() {
           }
 
           .hero h1 {
-            font-size: 38px;
+            font-size: 32px;
           }
 
           .hero-description {
@@ -1982,7 +1987,7 @@ export default function App() {
             grid-template-columns: repeat(2, 1fr);
           }
 
-          .gallery-item {
+          .gallery-item img {
             height: 180px;
           }
 
@@ -2613,7 +2618,7 @@ export default function App() {
                   onError={handleImageError}
                 />
 
-                <div className="gallery-caption">
+                <div className="gallery-info">
                   <span className="gallery-caption-title">{item.title}</span>
                   <span className="gallery-caption-text">
                     A glimpse of our caring healthcare environment.
