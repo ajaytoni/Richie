@@ -220,41 +220,57 @@ export default function App() {
   const gallery = [
     {
       title: "Hospital Exterior",
+      content:
+        "A welcoming hospital environment designed around patient comfort.",
       image:
         "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=90",
     },
     {
       title: "Patient Care",
+      content:
+        "Compassionate support focused on every patient's healthcare journey.",
       image:
         "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=90",
     },
     {
       title: "Operation Theatre",
+      content:
+        "Modern surgical spaces supported by advanced medical facilities.",
       image:
         "https://images.unsplash.com/photo-1516841273335-e39b37888115?auto=format&fit=crop&w=1200&q=90",
     },
     {
       title: "Medical Team",
+      content:
+        "Dedicated healthcare professionals working together for better care.",
       image:
         "https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=1200&q=90",
     },
     {
       title: "Healthcare Facilities",
+      content:
+        "Thoughtfully designed facilities supporting safe and comfortable care.",
       image:
         "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1200&q=90",
     },
     {
       title: "Hospital Interior",
+      content:
+        "Clean and comfortable spaces created for patients and families.",
       image:
         "https://images.unsplash.com/photo-1512678080530-7760d81f0fbf?auto=format&fit=crop&w=1200&q=90",
     },
     {
       title: "Medical Consultation",
+      content:
+        "Personalised consultations connecting patients with expert care.",
       image:
         "https://images.unsplash.com/photo-1643297654418-74f8fbc2a1c2?auto=format&fit=crop&w=1200&q=90",
     },
     {
       title: "Healthcare Team",
+      content:
+        "A caring medical team committed to patient-focused healthcare.",
       image:
         "https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=1200&q=90",
     },
@@ -377,7 +393,7 @@ export default function App() {
         }
 
         /* ==============================
-           PERFECT LINE BY LINE TEXT SYSTEM
+           LINE BY LINE TEXT SYSTEM
         ============================== */
 
         .lines {
@@ -471,38 +487,21 @@ export default function App() {
           line-height: 1.8;
         }
 
-        .department-card p .lines {
+        .department-card p .lines,
+        .service-card p .lines,
+        .facility-content p .lines,
+        .doctor-description .lines,
+        .emergency-card p .lines,
+        .footer p .lines,
+        .contact-card > p .lines,
+        .contact-detail .lines {
           display: flex;
           width: auto;
           align-items: flex-start;
         }
 
-        .department-card p .line {
-          width: max-content;
-          max-width: 100%;
-          min-height: 1.7em;
-          line-height: 1.7;
-        }
-
-        .service-card p .lines {
-          display: flex;
-          width: auto;
-          align-items: flex-start;
-        }
-
-        .service-card p .line {
-          width: max-content;
-          max-width: 100%;
-          min-height: 1.7em;
-          line-height: 1.7;
-        }
-
-        .facility-content p .lines {
-          display: flex;
-          width: auto;
-          align-items: flex-start;
-        }
-
+        .department-card p .line,
+        .service-card p .line,
         .facility-content p .line {
           width: max-content;
           max-width: 100%;
@@ -510,17 +509,19 @@ export default function App() {
           line-height: 1.7;
         }
 
-        .doctor-description .lines {
-          display: flex;
-          width: auto;
-          align-items: flex-start;
-        }
-
-        .doctor-description .line {
+        .doctor-description .line,
+        .emergency-card p .line,
+        .footer p .line,
+        .contact-card > p .line {
           width: max-content;
           max-width: 100%;
           min-height: 1.8em;
           line-height: 1.8;
+        }
+
+        .contact-detail .line {
+          width: max-content;
+          max-width: 100%;
         }
 
         .cta p .lines {
@@ -536,56 +537,6 @@ export default function App() {
           min-height: 1.8em;
           line-height: 1.8;
           text-align: center;
-        }
-
-        .emergency-card p .lines {
-          display: flex;
-          width: auto;
-          align-items: flex-start;
-        }
-
-        .emergency-card p .line {
-          width: max-content;
-          max-width: 100%;
-          min-height: 1.8em;
-          line-height: 1.8;
-        }
-
-        .footer p .lines {
-          display: flex;
-          width: auto;
-          align-items: flex-start;
-        }
-
-        .footer p .line {
-          width: max-content;
-          max-width: 100%;
-          min-height: 1.8em;
-          line-height: 1.8;
-        }
-
-        .contact-card > p .lines {
-          display: flex;
-          width: auto;
-          align-items: flex-start;
-        }
-
-        .contact-card > p .line {
-          width: max-content;
-          max-width: 100%;
-          min-height: 1.8em;
-          line-height: 1.8;
-        }
-
-        .contact-detail .lines {
-          display: flex;
-          width: auto;
-          align-items: flex-start;
-        }
-
-        .contact-detail .line {
-          width: max-content;
-          max-width: 100%;
         }
 
         /* ==============================
@@ -674,7 +625,7 @@ export default function App() {
         }
 
         .logo-sub {
-          margin-top: 0;
+          margin-top: 5px;
           font-size: 9px;
           letter-spacing: 2px;
           color: #8b6a36;
@@ -733,7 +684,7 @@ export default function App() {
         }
 
         /* ==============================
-           PREMIUM HOME PAGE
+           HOME
         ============================== */
 
         .hero {
@@ -793,7 +744,7 @@ export default function App() {
           max-width: 800px;
           margin: 0 0 20px;
           font-weight: 600;
-          color: #ffffff;
+          color: #fff;
           text-shadow:
             0 3px 18px rgba(0, 0, 0, 0.65),
             0 1px 3px rgba(0, 0, 0, 0.8);
@@ -801,19 +752,19 @@ export default function App() {
 
         .hero h1 .line {
           line-height: 1.05;
-          color: #ffffff;
+          color: #fff;
         }
 
         .hero-description {
           max-width: 700px;
-          color: #ffffff;
+          color: #fff;
           font-size: 17px;
           margin-bottom: 24px;
           text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
         }
 
         .hero-description .line {
-          color: #ffffff;
+          color: #fff;
         }
 
         .hero-buttons {
@@ -853,7 +804,7 @@ export default function App() {
         }
 
         /* ==============================
-           SECTION COMMON
+           COMMON
         ============================== */
 
         .section {
@@ -1001,10 +952,7 @@ export default function App() {
           color: #171717;
         }
 
-        .about-main-heading {
-          color: #171717 !important;
-        }
-
+        .about-main-heading,
         .about-main-heading .line {
           color: #171717 !important;
         }
@@ -1298,10 +1246,12 @@ export default function App() {
 
         /* ==============================
            GALLERY
+           ONLY GALLERY HAS THESE EFFECTS
         ============================== */
 
         .gallery {
           background: #f7f4ed;
+          overflow: hidden;
         }
 
         .gallery-grid {
@@ -1310,23 +1260,160 @@ export default function App() {
           gap: 12px;
         }
 
+        .gallery-heading-content {
+          max-width: 820px;
+          margin: 0 auto 28px;
+          text-align: center;
+          animation: galleryTextIn 0.9s ease both;
+        }
+
+        .gallery-intro {
+          color: #6c675f;
+          font-size: 15px;
+          line-height: 1.9;
+          margin: 0;
+          text-align: center;
+        }
+
+        .gallery-heading-content .lines {
+          display: inline-flex;
+          flex-direction: column;
+          align-items: center;
+          width: auto;
+          max-width: 100%;
+        }
+
+        .gallery-heading-content .line {
+          width: max-content;
+          max-width: 100%;
+          text-align: center;
+        }
+
+        .gallery-highlight {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-top: 18px;
+        }
+
+        .gallery-highlight span {
+          padding: 8px 14px;
+          border: 1px solid #d8c9b0;
+          background: rgba(255, 255, 255, 0.7);
+          color: #7b6034;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.4px;
+          animation: galleryBadgeFloat 4s ease-in-out infinite;
+        }
+
+        .gallery-highlight span:nth-child(2) {
+          animation-delay: -1.2s;
+        }
+
+        .gallery-highlight span:nth-child(3) {
+          animation-delay: -2.4s;
+        }
+
         .gallery-item {
           position: relative;
           height: 195px;
           overflow: hidden;
           cursor: pointer;
           background: #222;
+          border-radius: 2px;
+
+          animation-name: galleryImageReveal, galleryFloat1;
+          animation-duration: 0.9s, 6s;
+          animation-timing-function: ease, ease-in-out;
+          animation-fill-mode: both, both;
+          animation-iteration-count: 1, infinite;
+
+          will-change: transform, opacity;
+
+          transition:
+            transform 0.45s ease,
+            box-shadow 0.45s ease;
+        }
+
+        .gallery-item:nth-child(1) {
+          animation-delay: 0s, -0.5s;
+        }
+
+        .gallery-item:nth-child(2) {
+          animation-name: galleryImageReveal, galleryFloat2;
+          animation-delay: 0.08s, -1.4s;
+        }
+
+        .gallery-item:nth-child(3) {
+          animation-name: galleryImageReveal, galleryFloat3;
+          animation-delay: 0.16s, -2.2s;
+        }
+
+        .gallery-item:nth-child(4) {
+          animation-name: galleryImageReveal, galleryFloat2;
+          animation-delay: 0.24s, -3.1s;
+        }
+
+        .gallery-item:nth-child(5) {
+          animation-name: galleryImageReveal, galleryFloat1;
+          animation-delay: 0.32s, -4s;
+        }
+
+        .gallery-item:nth-child(6) {
+          animation-name: galleryImageReveal, galleryFloat3;
+          animation-delay: 0.4s, -4.8s;
+        }
+
+        .gallery-item:nth-child(7) {
+          animation-name: galleryImageReveal, galleryFloat2;
+          animation-delay: 0.48s, -2.7s;
+        }
+
+        .gallery-item:nth-child(8) {
+          animation-name: galleryImageReveal, galleryFloat1;
+          animation-delay: 0.56s, -1.8s;
+        }
+
+        .gallery-item::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background:
+            linear-gradient(
+              115deg,
+              transparent 25%,
+              rgba(255, 255, 255, 0.25) 50%,
+              transparent 75%
+            );
+          transform: translateX(-120%);
+          transition: transform 0.8s ease;
+        }
+
+        .gallery-item:hover {
+          transform: translateY(-10px) scale(1.02);
+          box-shadow:
+            0 20px 42px rgba(50, 35, 20, 0.18);
+        }
+
+        .gallery-item:hover::after {
+          transform: translateX(120%);
         }
 
         .gallery-item img {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          transition: 0.4s;
+          transition:
+            transform 0.7s ease,
+            filter 0.5s ease;
         }
 
         .gallery-item:hover img {
-          transform: scale(1.06);
+          transform: scale(1.09);
+          filter: brightness(1.05) saturate(1.08);
         }
 
         .gallery-caption {
@@ -1334,14 +1421,152 @@ export default function App() {
           left: 0;
           right: 0;
           bottom: 0;
-          padding: 35px 15px 15px;
+          padding: 42px 15px 14px;
           color: #fff;
-          font-weight: 700;
+          background:
+            linear-gradient(
+              transparent,
+              rgba(0, 0, 0, 0.88)
+            );
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          animation: galleryCaptionUp 0.75s ease both;
+        }
+
+        .gallery-item:nth-child(1) .gallery-caption {
+          animation-delay: 0s;
+        }
+
+        .gallery-item:nth-child(2) .gallery-caption {
+          animation-delay: 0.08s;
+        }
+
+        .gallery-item:nth-child(3) .gallery-caption {
+          animation-delay: 0.16s;
+        }
+
+        .gallery-item:nth-child(4) .gallery-caption {
+          animation-delay: 0.24s;
+        }
+
+        .gallery-item:nth-child(5) .gallery-caption {
+          animation-delay: 0.32s;
+        }
+
+        .gallery-item:nth-child(6) .gallery-caption {
+          animation-delay: 0.4s;
+        }
+
+        .gallery-item:nth-child(7) .gallery-caption {
+          animation-delay: 0.48s;
+        }
+
+        .gallery-item:nth-child(8) .gallery-caption {
+          animation-delay: 0.56s;
+        }
+
+        .gallery-caption strong {
           font-size: 14px;
-          background: linear-gradient(
-            transparent,
-            rgba(0, 0, 0, 0.8)
-          );
+          font-weight: 800;
+          line-height: 1.3;
+        }
+
+        .gallery-caption span {
+          display: block;
+          font-size: 11px;
+          line-height: 1.5;
+          font-weight: 400;
+          color: rgba(255, 255, 255, 0.88);
+        }
+
+        @keyframes galleryImageReveal {
+          from {
+            opacity: 0;
+            transform: translateY(45px) scale(0.94);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        @keyframes galleryFloat1 {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+
+          50% {
+            transform: translateY(-7px);
+          }
+        }
+
+        @keyframes galleryFloat2 {
+          0%,
+          100% {
+            transform: translateY(-3px);
+          }
+
+          50% {
+            transform: translateY(7px);
+          }
+        }
+
+        @keyframes galleryFloat3 {
+          0%,
+          100% {
+            transform: translateY(3px);
+          }
+
+          50% {
+            transform: translateY(-5px);
+          }
+        }
+
+        @keyframes galleryCaptionUp {
+          from {
+            opacity: 0;
+            transform: translateY(12px);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes galleryTextIn {
+          from {
+            opacity: 0;
+            transform: translateY(22px);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes galleryBadgeFloat {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+
+          50% {
+            transform: translateY(-5px);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .gallery-item,
+          .gallery-caption,
+          .gallery-heading-content,
+          .gallery-highlight span {
+            animation: none !important;
+          }
         }
 
         /* ==============================
@@ -1558,7 +1783,8 @@ export default function App() {
           background: #25d366;
           color: #fff;
           font-size: 27px;
-          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+          box-shadow:
+            0 8px 25px rgba(0, 0, 0, 0.25);
         }
 
         /* ==============================
@@ -1863,6 +2089,34 @@ export default function App() {
             height: 180px;
           }
 
+          .gallery-caption {
+            padding: 34px 10px 10px;
+          }
+
+          .gallery-caption strong {
+            font-size: 12px;
+          }
+
+          .gallery-caption span {
+            font-size: 10px;
+          }
+
+          .gallery-heading-content {
+            width: 100%;
+          }
+
+          .gallery-heading-content .lines {
+            width: 100%;
+            align-items: center;
+          }
+
+          .gallery-heading-content .line {
+            width: auto;
+            max-width: 100%;
+            text-align: center;
+            white-space: normal;
+          }
+
           .footer-grid {
             grid-template-columns: 1fr;
             gap: 16px;
@@ -1991,7 +2245,9 @@ export default function App() {
           </button>
 
           <nav className={`nav-links ${mobileMenu ? "open" : ""}`}>
-            <button onClick={() => scrollTo("home")}>Home</button>
+            <button onClick={() => scrollTo("home")}>
+              Home
+            </button>
 
             <button onClick={() => scrollTo("about")}>
               About
@@ -2147,7 +2403,9 @@ export default function App() {
             </div>
 
             <div className="about-content">
-              <div className="eyebrow">About RichieCare</div>
+              <div className="eyebrow">
+                About RichieCare
+              </div>
 
               <h2 className="about-main-heading">
                 <Lines
@@ -2239,10 +2497,15 @@ export default function App() {
           DEPARTMENTS
       ============================== */}
 
-      <section id="departments" className="section departments">
+      <section
+        id="departments"
+        className="section departments"
+      >
         <div className="container">
           <div className="section-heading center">
-            <div className="eyebrow">Medical Departments</div>
+            <div className="eyebrow">
+              Medical Departments
+            </div>
 
             <h2>
               <Lines
@@ -2277,7 +2540,9 @@ export default function App() {
                 </h3>
 
                 <p>
-                  <Lines lines={department.description} />
+                  <Lines
+                    lines={department.description}
+                  />
                 </p>
               </div>
             ))}
@@ -2292,7 +2557,9 @@ export default function App() {
       <section id="doctors" className="section doctors">
         <div className="container">
           <div className="section-heading">
-            <div className="eyebrow">Our Specialists</div>
+            <div className="eyebrow">
+              Our Specialists
+            </div>
 
             <h2>
               <Lines
@@ -2315,12 +2582,17 @@ export default function App() {
 
           <div className="doctor-grid">
             {doctors.map((doctor) => (
-              <div className="doctor-card" key={doctor.name}>
+              <div
+                className="doctor-card"
+                key={doctor.name}
+              >
                 <img
                   src={doctor.image}
                   alt={doctor.name}
                   className="doctor-image"
-                  onClick={() => setSelectedImage(doctor.image)}
+                  onClick={() =>
+                    setSelectedImage(doctor.image)
+                  }
                   onError={handleImageError}
                 />
 
@@ -2334,7 +2606,9 @@ export default function App() {
                   </div>
 
                   <div className="doctor-description">
-                    <Lines lines={doctor.description} />
+                    <Lines
+                      lines={doctor.description}
+                    />
                   </div>
                 </div>
               </div>
@@ -2350,7 +2624,9 @@ export default function App() {
       <section id="services" className="section services">
         <div className="container">
           <div className="section-heading center">
-            <div className="eyebrow">Healthcare Services</div>
+            <div className="eyebrow">
+              Healthcare Services
+            </div>
 
             <h2>
               <Lines
@@ -2373,7 +2649,10 @@ export default function App() {
 
           <div className="service-grid">
             {services.map((service) => (
-              <div className="service-card" key={service.title}>
+              <div
+                className="service-card"
+                key={service.title}
+              >
                 <div className="service-icon">
                   {service.icon}
                 </div>
@@ -2383,7 +2662,9 @@ export default function App() {
                 </h3>
 
                 <p>
-                  <Lines lines={service.description} />
+                  <Lines
+                    lines={service.description}
+                  />
                 </p>
               </div>
             ))}
@@ -2395,10 +2676,15 @@ export default function App() {
           FACILITIES
       ============================== */}
 
-      <section id="facilities" className="section facilities">
+      <section
+        id="facilities"
+        className="section facilities"
+      >
         <div className="container">
           <div className="section-heading center">
-            <div className="eyebrow">Hospital Facilities</div>
+            <div className="eyebrow">
+              Hospital Facilities
+            </div>
 
             <h2>
               <Lines
@@ -2441,7 +2727,9 @@ export default function App() {
                   </h3>
 
                   <p>
-                    <Lines lines={facility.description} />
+                    <Lines
+                      lines={facility.description}
+                    />
                   </p>
                 </div>
               </div>
@@ -2457,7 +2745,9 @@ export default function App() {
       <section id="gallery" className="section gallery">
         <div className="container">
           <div className="section-heading center">
-            <div className="eyebrow">Hospital Gallery</div>
+            <div className="eyebrow">
+              Hospital Gallery
+            </div>
 
             <h2>
               <Lines
@@ -2477,12 +2767,31 @@ export default function App() {
             </p>
           </div>
 
+          <div className="gallery-heading-content">
+            <p className="gallery-intro">
+              <Lines
+                lines={[
+                  "Take a closer look at the spaces, people and moments",
+                  "that make RichieCare a welcoming place for healthcare.",
+                ]}
+              />
+            </p>
+
+            <div className="gallery-highlight">
+              <span>Modern Facilities</span>
+              <span>Dedicated Medical Team</span>
+              <span>Patient-Focused Care</span>
+            </div>
+          </div>
+
           <div className="gallery-grid">
             {gallery.map((item) => (
               <div
                 className="gallery-item"
                 key={item.title}
-                onClick={() => setSelectedImage(item.image)}
+                onClick={() =>
+                  setSelectedImage(item.image)
+                }
               >
                 <img
                   src={item.image}
@@ -2491,7 +2800,9 @@ export default function App() {
                 />
 
                 <div className="gallery-caption">
-                  {item.title}
+                  <strong>{item.title}</strong>
+
+                  <span>{item.content}</span>
                 </div>
               </div>
             ))}
@@ -2505,7 +2816,9 @@ export default function App() {
 
       <section className="cta">
         <div className="container">
-          <div className="eyebrow">Your Health Matters</div>
+          <div className="eyebrow">
+            Your Health Matters
+          </div>
 
           <h2>
             <Lines
@@ -2540,7 +2853,9 @@ export default function App() {
       <section id="contact" className="section contact">
         <div className="container">
           <div className="section-heading">
-            <div className="eyebrow">Contact RichieCare</div>
+            <div className="eyebrow">
+              Contact RichieCare
+            </div>
 
             <h2>
               <Lines
@@ -2572,10 +2887,14 @@ export default function App() {
 
               <div className="contact-details">
                 <div className="contact-detail">
-                  <div className="contact-icon">📍</div>
+                  <div className="contact-icon">
+                    📍
+                  </div>
 
                   <div>
-                    <strong>Hospital Address</strong>
+                    <strong>
+                      Hospital Address
+                    </strong>
 
                     <span>
                       <Lines
@@ -2588,7 +2907,9 @@ export default function App() {
                 </div>
 
                 <div className="contact-detail">
-                  <div className="contact-icon">☎</div>
+                  <div className="contact-icon">
+                    ☎
+                  </div>
 
                   <div>
                     <strong>Phone</strong>
@@ -2604,7 +2925,9 @@ export default function App() {
                 </div>
 
                 <div className="contact-detail">
-                  <div className="contact-icon">✉</div>
+                  <div className="contact-icon">
+                    ✉
+                  </div>
 
                   <div>
                     <strong>Email</strong>
@@ -2685,19 +3008,29 @@ export default function App() {
               <h3>Quick Links</h3>
 
               <div className="footer-links">
-                <button onClick={() => scrollTo("home")}>
+                <button
+                  onClick={() => scrollTo("home")}
+                >
                   Home
                 </button>
 
-                <button onClick={() => scrollTo("about")}>
+                <button
+                  onClick={() => scrollTo("about")}
+                >
                   About
                 </button>
 
-                <button onClick={() => scrollTo("departments")}>
+                <button
+                  onClick={() =>
+                    scrollTo("departments")
+                  }
+                >
                   Departments
                 </button>
 
-                <button onClick={() => scrollTo("doctors")}>
+                <button
+                  onClick={() => scrollTo("doctors")}
+                >
                   Doctors
                 </button>
               </div>
@@ -2707,19 +3040,29 @@ export default function App() {
               <h3>Explore</h3>
 
               <div className="footer-links">
-                <button onClick={() => scrollTo("services")}>
+                <button
+                  onClick={() => scrollTo("services")}
+                >
                   Services
                 </button>
 
-                <button onClick={() => scrollTo("facilities")}>
+                <button
+                  onClick={() =>
+                    scrollTo("facilities")
+                  }
+                >
                   Facilities
                 </button>
 
-                <button onClick={() => scrollTo("gallery")}>
+                <button
+                  onClick={() => scrollTo("gallery")}
+                >
                   Gallery
                 </button>
 
-                <button onClick={() => scrollTo("contact")}>
+                <button
+                  onClick={() => scrollTo("contact")}
+                >
                   Contact
                 </button>
               </div>
@@ -2742,8 +3085,8 @@ export default function App() {
 
           <div className="footer-bottom">
             <div>
-              © 2026 RichieCare Multispeciality Hospital. All
-              Rights Reserved.
+              © 2026 RichieCare Multispeciality Hospital.
+              All Rights Reserved.
             </div>
 
             <div>
@@ -2761,7 +3104,7 @@ export default function App() {
       </footer>
 
       {/* ==============================
-          WHATSAPP BUTTON
+          WHATSAPP
       ============================== */}
 
       <button
@@ -2779,15 +3122,21 @@ export default function App() {
       {showAppointment && (
         <div
           className="modal-backdrop"
-          onClick={() => setShowAppointment(false)}
+          onClick={() =>
+            setShowAppointment(false)
+          }
         >
           <div
             className="appointment-modal"
-            onClick={(event) => event.stopPropagation()}
+            onClick={(event) =>
+              event.stopPropagation()
+            }
           >
             <button
               className="modal-close"
-              onClick={() => setShowAppointment(false)}
+              onClick={() =>
+                setShowAppointment(false)
+              }
             >
               ×
             </button>
@@ -2842,19 +3191,27 @@ export default function App() {
                 <div className="form-group">
                   <label>Department</label>
 
-                  <select required defaultValue="">
-                    <option value="" disabled>
+                  <select
+                    required
+                    defaultValue=""
+                  >
+                    <option
+                      value=""
+                      disabled
+                    >
                       Select department
                     </option>
 
-                    {departments.map((department) => (
-                      <option
-                        value={department.title}
-                        key={department.title}
-                      >
-                        {department.title}
-                      </option>
-                    ))}
+                    {departments.map(
+                      (department) => (
+                        <option
+                          value={department.title}
+                          key={department.title}
+                        >
+                          {department.title}
+                        </option>
+                      )
+                    )}
                   </select>
                 </div>
 
@@ -2897,11 +3254,15 @@ export default function App() {
       {selectedImage && (
         <div
           className="lightbox"
-          onClick={() => setSelectedImage(null)}
+          onClick={() =>
+            setSelectedImage(null)
+          }
         >
           <button
             className="lightbox-close"
-            onClick={() => setSelectedImage(null)}
+            onClick={() =>
+              setSelectedImage(null)
+            }
           >
             ×
           </button>
@@ -2909,7 +3270,9 @@ export default function App() {
           <img
             src={selectedImage}
             alt="Hospital preview"
-            onClick={(event) => event.stopPropagation()}
+            onClick={(event) =>
+              event.stopPropagation()
+            }
             onError={handleImageError}
           />
         </div>
