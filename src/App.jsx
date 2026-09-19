@@ -220,43 +220,51 @@ export default function App() {
   const gallery = [
     {
       title: "Hospital Exterior",
-      image:
-        "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=90",
+      tag: "WELCOME",
+      icon: "🏥",
+      text: "A calm first impression designed around comfort and care.",
     },
     {
       title: "Patient Care",
-      image:
-        "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1200&q=90",
+      tag: "COMPASSION",
+      icon: "🩺",
+      text: "Thoughtful patient support from admission through recovery.",
     },
     {
       title: "Operation Theatre",
-      image:
-        "https://images.unsplash.com/photo-1511174511562-5f7f18b874f8?auto=format&fit=crop&w=1200&q=90",
+      tag: "PRECISION",
+      icon: "⚕️",
+      text: "Modern surgical spaces built for focused clinical care.",
     },
     {
       title: "Medical Team",
-      image:
-        "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=1200&q=90",
+      tag: "EXPERTISE",
+      icon: "👨‍⚕️",
+      text: "Experienced professionals working together for every patient.",
     },
     {
       title: "Healthcare Facilities",
-      image:
-        "https://images.unsplash.com/photo-1580281658628-4f2e3b1f0f96?auto=format&fit=crop&w=1200&q=90",
+      tag: "ADVANCED",
+      icon: "💊",
+      text: "Purpose-built facilities supporting accurate medical care.",
     },
     {
       title: "Hospital Interior",
-      image:
-        "https://images.unsplash.com/photo-1516841273335-e39b37888115?auto=format&fit=crop&w=1200&q=90",
+      tag: "COMFORT",
+      icon: "🛏️",
+      text: "Bright, welcoming spaces created for patients and families.",
     },
     {
       title: "Medical Consultation",
-      image:
-        "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=90",
+      tag: "PERSONAL CARE",
+      icon: "👩‍⚕️",
+      text: "Clear conversations that help patients understand their care.",
     },
     {
       title: "Healthcare Team",
-      image:
-        "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=90",
+      tag: "TOGETHER",
+      icon: "❤️",
+      text: "A coordinated team focused on better healthcare experiences.",
     },
   ];
 
@@ -264,7 +272,10 @@ export default function App() {
     return (
       <span className={`lines ${className}`}>
         {lines.map((line, index) => (
-          <span className="line" key={`${line}-${index}`}>
+          <span
+            className="line"
+            key={`${line}-${index}`}
+          >
             {line || "\u00A0"}
           </span>
         ))}
@@ -284,7 +295,8 @@ export default function App() {
       const element = document.getElementById(id);
 
       if (element) {
-        const headerHeight = window.innerWidth <= 850 ? 72 : 118;
+        const headerHeight =
+          window.innerWidth <= 850 ? 72 : 118;
 
         const top =
           element.getBoundingClientRect().top +
@@ -333,6 +345,45 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const root = document.querySelector("main");
+
+    if (!root) return;
+
+    const textElements = root.querySelectorAll(
+      "h1, h2, h3, h4, p, li, .eyebrow, .section-kicker, .section-label, .btn, .card-title, .card-text, .gallery-tag, .gallery-caption-title, .gallery-caption-text, .doctor-name, .doctor-specialty, .facility-title, .facility-text"
+    );
+
+    textElements.forEach((element, index) => {
+      element.classList.add("reveal-up");
+      element.style.transitionDelay =
+        `${(index % 5) * 0.07}s`;
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(
+              "reveal-visible"
+            );
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -45px 0px",
+      }
+    );
+
+    textElements.forEach((element) => {
+      observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       <style>{`
@@ -377,15 +428,46 @@ export default function App() {
         }
 
         /* ==============================
-           PERFECT LINE BY LINE TEXT SYSTEM
+           CONTENT ALIGNMENT
         ============================== */
+
+        .hero-content,
+        .about-content,
+        .department-card,
+        .doctor-content,
+        .service-card,
+        .facility-content,
+        .contact-card,
+        .emergency-card,
+        .footer {
+          text-align: left;
+        }
+
+        .hero-description,
+        .about-text,
+        .department-card p,
+        .doctor-description,
+        .service-card p,
+        .facility-content p,
+        .contact-card > p,
+        .emergency-card p,
+        .footer p {
+          text-align: left;
+        }
+
+        .about-point,
+        .contact-detail {
+          align-items: flex-start;
+        }
+
+        .footer-links {
+          justify-items: start;
+        }
 
         .lines {
           display: inline-flex;
           flex-direction: column;
           align-items: flex-start;
-          width: auto;
-          max-width: 100%;
           margin: 0;
           padding: 0;
           vertical-align: top;
@@ -394,198 +476,69 @@ export default function App() {
 
         .line {
           display: block;
-          width: max-content;
-          max-width: 100%;
-          min-height: 1.45em;
           margin: 0;
           padding: 0;
-          line-height: 1.55;
           text-align: left;
-          white-space: nowrap;
+          line-height: inherit;
+          white-space: normal;
+        }
+
+        .center {
+          text-align: center;
         }
 
         .center .lines {
-          display: inline-flex;
           align-items: center;
-          width: auto;
-          max-width: 100%;
           text-align: center;
         }
 
         .center .line {
-          width: max-content;
-          max-width: 100%;
           text-align: center;
         }
 
         h1 .lines,
         h2 .lines,
         h3 .lines {
-          display: flex;
-          width: auto;
           align-items: flex-start;
         }
 
         h1 .line,
         h2 .line,
         h3 .line {
-          width: max-content;
-          max-width: 100%;
+          text-align: left;
         }
 
-        p .lines {
-          display: flex;
-          width: auto;
-          align-items: flex-start;
-        }
-
-        p .line {
-          width: max-content;
-          max-width: 100%;
-        }
-
-        .hero-description .lines {
-          display: flex;
-          width: auto;
-          max-width: 100%;
-          align-items: flex-start;
-        }
-
-        .hero-description .line {
-          width: max-content;
-          max-width: 100%;
-          min-height: 1.8em;
-          line-height: 1.8;
-        }
-
-        .about-text .lines {
-          display: flex;
-          width: auto;
-          align-items: flex-start;
-        }
-
-        .about-text .line {
-          width: max-content;
-          max-width: 100%;
-          min-height: 1.8em;
-          line-height: 1.8;
-        }
-
-        .department-card p .lines {
-          display: flex;
-          width: auto;
-          align-items: flex-start;
-        }
-
-        .department-card p .line {
-          width: max-content;
-          max-width: 100%;
-          min-height: 1.7em;
-          line-height: 1.7;
-        }
-
-        .service-card p .lines {
-          display: flex;
-          width: auto;
-          align-items: flex-start;
-        }
-
-        .service-card p .line {
-          width: max-content;
-          max-width: 100%;
-          min-height: 1.7em;
-          line-height: 1.7;
-        }
-
-        .facility-content p .lines {
-          display: flex;
-          width: auto;
-          align-items: flex-start;
-        }
-
-        .facility-content p .line {
-          width: max-content;
-          max-width: 100%;
-          min-height: 1.7em;
-          line-height: 1.7;
-        }
-
-        .doctor-description .lines {
-          display: flex;
-          width: auto;
-          align-items: flex-start;
-        }
-
-        .doctor-description .line {
-          width: max-content;
-          max-width: 100%;
-          min-height: 1.8em;
-          line-height: 1.8;
-        }
-
-        .cta p .lines {
-          display: inline-flex;
-          align-items: center;
-          width: auto;
-          max-width: 100%;
-        }
-
+        .section-heading.center h2 .line,
+        .section-heading.center p .line,
+        .cta h2 .line,
         .cta p .line {
-          width: max-content;
-          max-width: 100%;
-          min-height: 1.8em;
-          line-height: 1.8;
           text-align: center;
         }
 
-        .emergency-card p .lines {
-          display: flex;
-          width: auto;
-          align-items: flex-start;
-        }
-
-        .emergency-card p .line {
-          width: max-content;
-          max-width: 100%;
-          min-height: 1.8em;
-          line-height: 1.8;
-        }
-
-        .footer p .lines {
-          display: flex;
-          width: auto;
-          align-items: flex-start;
-        }
-
-        .footer p .line {
-          width: max-content;
-          max-width: 100%;
-          min-height: 1.8em;
-          line-height: 1.8;
-        }
-
-        .contact-card > p .lines {
-          display: flex;
-          width: auto;
-          align-items: flex-start;
-        }
-
-        .contact-card > p .line {
-          width: max-content;
-          max-width: 100%;
-          min-height: 1.8em;
-          line-height: 1.8;
-        }
-
+        .hero-description .lines,
+        .about-text .lines,
+        .department-card p .lines,
+        .service-card p .lines,
+        .facility-content p .lines,
+        .doctor-description .lines,
+        .emergency-card p .lines,
+        .footer p .lines,
+        .contact-card > p .lines,
         .contact-detail .lines {
-          display: flex;
-          width: auto;
           align-items: flex-start;
         }
 
+        .hero-description .line,
+        .about-text .line,
+        .department-card p .line,
+        .service-card p .line,
+        .facility-content p .line,
+        .doctor-description .line,
+        .emergency-card p .line,
+        .footer p .line,
+        .contact-card > p .line,
         .contact-detail .line {
-          width: max-content;
-          max-width: 100%;
+          text-align: left;
         }
 
         /* ==============================
@@ -733,7 +686,7 @@ export default function App() {
         }
 
         /* ==============================
-           PREMIUM HOME PAGE
+           PREMIUM HOME
         ============================== */
 
         .hero {
@@ -793,7 +746,7 @@ export default function App() {
           max-width: 800px;
           margin: 0 0 20px;
           font-weight: 600;
-          color: #ffffff;
+          color: #fff;
           text-shadow:
             0 3px 18px rgba(0, 0, 0, 0.65),
             0 1px 3px rgba(0, 0, 0, 0.8);
@@ -801,19 +754,19 @@ export default function App() {
 
         .hero h1 .line {
           line-height: 1.05;
-          color: #ffffff;
+          color: #fff;
         }
 
         .hero-description {
           max-width: 700px;
-          color: #ffffff;
+          color: #fff;
           font-size: 17px;
           margin-bottom: 24px;
           text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
         }
 
         .hero-description .line {
-          color: #ffffff;
+          color: #fff;
         }
 
         .hero-buttons {
@@ -1265,7 +1218,10 @@ export default function App() {
           background: #f7f4ed;
           border: 1px solid #e7dece;
           overflow: hidden;
-          transition: transform 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease;
+          transition:
+            transform 0.45s ease,
+            box-shadow 0.45s ease,
+            border-color 0.45s ease;
           animation: facilityFloat 3.8s ease-in-out infinite;
           will-change: transform;
         }
@@ -1291,7 +1247,13 @@ export default function App() {
           top: 0;
           width: 55%;
           height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.32), transparent);
+          background:
+            linear-gradient(
+              90deg,
+              transparent,
+              rgba(255, 255, 255, 0.32),
+              transparent
+            );
           transform: skewX(-18deg);
           transition: left 0.8s ease;
           pointer-events: none;
@@ -1306,7 +1268,9 @@ export default function App() {
           height: 180px;
           object-fit: cover;
           cursor: pointer;
-          transition: transform 0.7s cubic-bezier(.2,.7,.2,1), filter 0.5s ease;
+          transition:
+            transform 0.7s cubic-bezier(.2, .7, .2, 1),
+            filter 0.5s ease;
         }
 
         .facility-card:hover .facility-image {
@@ -1315,12 +1279,47 @@ export default function App() {
         }
 
         @keyframes facilityFloat {
-          0% { transform: translate3d(0, 0, 0) rotateZ(0deg) scale(1); }
-          20% { transform: translate3d(5px, -9px, 0) rotateZ(0.35deg) scale(1.008); }
-          40% { transform: translate3d(-4px, -16px, 0) rotateZ(-0.3deg) scale(1.014); }
-          60% { transform: translate3d(-7px, -9px, 0) rotateZ(-0.4deg) scale(1.008); }
-          80% { transform: translate3d(4px, -4px, 0) rotateZ(0.3deg) scale(1.004); }
-          100% { transform: translate3d(0, 0, 0) rotateZ(0deg) scale(1); }
+          0% {
+            transform:
+              translate3d(0, 0, 0)
+              rotateZ(0deg)
+              scale(1);
+          }
+
+          20% {
+            transform:
+              translate3d(5px, -9px, 0)
+              rotateZ(0.35deg)
+              scale(1.008);
+          }
+
+          40% {
+            transform:
+              translate3d(-4px, -16px, 0)
+              rotateZ(-0.3deg)
+              scale(1.014);
+          }
+
+          60% {
+            transform:
+              translate3d(-7px, -9px, 0)
+              rotateZ(-0.4deg)
+              scale(1.008);
+          }
+
+          80% {
+            transform:
+              translate3d(4px, -4px, 0)
+              rotateZ(0.3deg)
+              scale(1.004);
+          }
+
+          100% {
+            transform:
+              translate3d(0, 0, 0)
+              rotateZ(0deg)
+              scale(1);
+          }
         }
 
         .facility-content {
@@ -1341,127 +1340,620 @@ export default function App() {
         }
 
         /* ==============================
-           GALLERY
+           TEXT REVEAL
         ============================== */
 
+        main .reveal-up {
+          opacity: 0;
+          transform: translate3d(0, 42px, 0);
+          filter: blur(4px);
+          transition:
+            opacity 0.9s cubic-bezier(.16, .8, .24, 1),
+            transform 0.9s cubic-bezier(.16, .8, .24, 1),
+            filter 0.9s ease;
+          will-change: opacity, transform, filter;
+        }
+
+        main .reveal-up.reveal-visible {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+          filter: blur(0);
+        }
+
+        main .reveal-up:nth-child(2) {
+          transition-delay: 0.08s;
+        }
+
+        main .reveal-up:nth-child(3) {
+          transition-delay: 0.16s;
+        }
+
+        main .reveal-up:nth-child(4) {
+          transition-delay: 0.24s;
+        }
+
+        main .reveal-up:nth-child(5) {
+          transition-delay: 0.32s;
+        }
+
+        /* ==============================
+           GLOBAL IMAGE MOTION
+        ============================== */
+
+        main img {
+          animation:
+            imageCinematic3s
+            3s
+            ease-in-out
+            infinite;
+          transform-origin: center center;
+          will-change: transform, filter;
+        }
+
+        main img:hover {
+          animation-play-state: paused;
+        }
+
+        @keyframes imageCinematic3s {
+          0% {
+            transform: scale(1);
+            filter: brightness(1) saturate(1);
+          }
+
+          45% {
+            transform: scale(1.045);
+            filter: brightness(1.04) saturate(1.08);
+          }
+
+          100% {
+            transform: scale(1);
+            filter: brightness(1) saturate(1);
+          }
+        }
+
+        /* ==================================================
+           GALLERY
+           SIMPLE + CLEARLY VISIBLE ANIMATIONS
+        ================================================== */
+
         .gallery {
-          background: #f7f4ed;
+          position: relative;
+          overflow: hidden;
+          isolation: isolate;
+          background:
+            radial-gradient(
+              circle at 15% 20%,
+              rgba(213, 172, 96, 0.18),
+              transparent 25%
+            ),
+            radial-gradient(
+              circle at 85% 80%,
+              rgba(183, 134, 53, 0.15),
+              transparent 28%
+            ),
+            linear-gradient(
+              135deg,
+              #faf7f0,
+              #f1ebdf,
+              #fffaf2
+            );
+        }
+
+        .gallery::before {
+          content: "";
+          position: absolute;
+          width: 420px;
+          height: 420px;
+          right: -180px;
+          top: 30px;
+          border: 2px solid rgba(183, 134, 53, 0.2);
+          border-radius: 50%;
+          animation: galleryRotate 12s linear infinite;
+          pointer-events: none;
+        }
+
+        .gallery::after {
+          content: "";
+          position: absolute;
+          width: 280px;
+          height: 280px;
+          left: -140px;
+          bottom: 30px;
+          border: 2px solid rgba(213, 172, 96, 0.18);
+          border-radius: 50%;
+          animation: galleryRotateReverse 9s linear infinite;
+          pointer-events: none;
+        }
+
+        .gallery .container {
+          position: relative;
+          z-index: 2;
         }
 
         .gallery-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 16px;
-          perspective: 1200px;
+          gap: 20px;
         }
 
         .gallery-item {
           position: relative;
+          min-height: 320px;
           overflow: hidden;
-          cursor: pointer;
-          background: #fffdf8;
-          border-radius: 12px;
-          border: 1px solid rgba(183, 134, 53, 0.28);
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.10);
-          transform: translateY(0) rotateZ(0deg);
-          animation: galleryFloat 3.9s ease-in-out infinite;
-          transition: transform 0.55s cubic-bezier(.2,.8,.2,1), box-shadow 0.55s ease, border-color 0.35s ease;
-          will-change: transform;
+          border-radius: 15px;
+          background:
+            linear-gradient(
+              145deg,
+              #101010,
+              #292929
+            );
+          border: 1px solid rgba(213, 172, 96, 0.45);
+          box-shadow:
+            0 18px 40px rgba(0, 0, 0, 0.18);
+          isolation: isolate;
+          animation:
+            galleryFloat
+            4s
+            ease-in-out
+            infinite;
+          transition:
+            transform 0.4s ease,
+            box-shadow 0.4s ease,
+            border-color 0.4s ease;
         }
 
-        .gallery-item:nth-child(2n) {
-          animation-delay: -0.9s;
+        .gallery-item:nth-child(2) {
+          animation-delay: -0.5s;
         }
 
-        .gallery-item:nth-child(3n) {
-          animation-delay: -1.9s;
+        .gallery-item:nth-child(3) {
+          animation-delay: -1s;
         }
 
-        .gallery-item:nth-child(4n) {
-          animation-delay: -2.9s;
+        .gallery-item:nth-child(4) {
+          animation-delay: -1.5s;
+        }
+
+        .gallery-item:nth-child(5) {
+          animation-delay: -2s;
+        }
+
+        .gallery-item:nth-child(6) {
+          animation-delay: -2.5s;
+        }
+
+        .gallery-item:nth-child(7) {
+          animation-delay: -3s;
+        }
+
+        .gallery-item:nth-child(8) {
+          animation-delay: -3.5s;
+        }
+
+        .gallery-item:hover {
+          transform: translateY(-14px) scale(1.03);
+          border-color: #e2bd76;
+          box-shadow:
+            0 30px 60px rgba(0, 0, 0, 0.28),
+            0 0 30px rgba(213, 172, 96, 0.25);
         }
 
         .gallery-item::before {
           content: "";
           position: absolute;
           inset: 0;
-          z-index: 2;
-          background: linear-gradient(135deg, rgba(255,255,255,0.18), transparent 35%, rgba(0,0,0,0.12));
-          opacity: 0.65;
-          transition: opacity 0.45s ease;
+          z-index: 4;
           pointer-events: none;
+          background:
+            linear-gradient(
+              115deg,
+              transparent 20%,
+              rgba(255, 255, 255, 0.18) 45%,
+              rgba(226, 189, 118, 0.35) 50%,
+              transparent 70%
+            );
+          background-size: 250% 100%;
+          animation:
+            galleryShine
+            3s
+            linear
+            infinite;
         }
 
-        .gallery-item:hover {
-          animation-play-state: paused;
-          transform: translateY(-12px) scale(1.025) rotateZ(-0.6deg);
-          box-shadow: 0 24px 48px rgba(0, 0, 0, 0.19);
-          border-color: #d5ac60;
+        .gallery-item::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          z-index: 3;
+          pointer-events: none;
+          background:
+            linear-gradient(
+              to top,
+              rgba(0, 0, 0, 0.9),
+              rgba(0, 0, 0, 0.2) 60%,
+              transparent
+            );
         }
 
-        .gallery-item:hover::before {
-          opacity: 0.2;
+        .gallery-visual {
+          position: absolute;
+          inset: 0;
+          display: grid;
+          place-items: center;
+          background:
+            radial-gradient(
+              circle at center,
+              rgba(213, 172, 96, 0.2),
+              transparent 42%
+            ),
+            linear-gradient(
+              145deg,
+              #111,
+              #242424
+            );
         }
 
-        .gallery-item img {
-          width: 100%;
-          height: 205px;
-          object-fit: cover;
-          transition: transform 0.8s cubic-bezier(.2,.7,.2,1), filter 0.55s ease;
+        .gallery-visual::before {
+          content: "";
+          position: absolute;
+          width: 190px;
+          height: 190px;
+          border-radius: 50%;
+          border:
+            2px solid
+            rgba(213, 172, 96, 0.28);
+          animation:
+            galleryCircle
+            5s
+            linear
+            infinite;
         }
 
-        .gallery-item:hover img {
-          transform: scale(1.13) translate3d(0, -3px, 0);
-          filter: saturate(1.12) contrast(1.04);
+        .gallery-visual::after {
+          content: "";
+          position: absolute;
+          width: 125px;
+          height: 125px;
+          border-radius: 50%;
+          border:
+            1px dashed
+            rgba(255, 255, 255, 0.35);
+          animation:
+            galleryCircleReverse
+            4s
+            linear
+            infinite;
         }
 
-        @keyframes galleryFloat {
-          0% { transform: translate3d(0, 0, 0) rotateZ(0deg) scale(1); }
-          18% { transform: translate3d(6px, -8px, 0) rotateZ(0.45deg) scale(1.008); }
-          36% { transform: translate3d(-5px, -17px, 0) rotateZ(-0.55deg) scale(1.016); }
-          54% { transform: translate3d(-8px, -10px, 0) rotateZ(-0.7deg) scale(1.01); }
-          72% { transform: translate3d(5px, -4px, 0) rotateZ(0.5deg) scale(1.005); }
-          100% { transform: translate3d(0, 0, 0) rotateZ(0deg) scale(1); }
+        .gallery-medical-icon {
+          position: relative;
+          z-index: 2;
+          width: 120px;
+          height: 120px;
+          display: grid;
+          place-items: center;
+          border-radius: 50%;
+          background:
+            radial-gradient(
+              circle,
+              rgba(255, 255, 255, 0.18),
+              rgba(213, 172, 96, 0.08)
+            );
+          border:
+            2px solid
+            rgba(213, 172, 96, 0.65);
+          font-size: 62px;
+          animation:
+            galleryIconFloat
+            2.8s
+            ease-in-out
+            infinite;
+          box-shadow:
+            0 0 35px
+            rgba(213, 172, 96, 0.18);
+        }
+
+        .gallery-medical-icon::after {
+          content: "✦";
+          position: absolute;
+          right: -18px;
+          top: 8px;
+          color: #e2bd76;
+          font-size: 20px;
+          animation:
+            galleryStar
+            1.8s
+            ease-in-out
+            infinite;
+        }
+
+        .gallery-floating-icon {
+          position: absolute;
+          z-index: 5;
+          font-size: 24px;
+          animation:
+            gallerySmallFloat
+            3s
+            ease-in-out
+            infinite;
+          filter:
+            drop-shadow(
+              0 0 8px
+              rgba(226, 189, 118, 0.55)
+            );
+        }
+
+        .gallery-floating-one {
+          left: 20px;
+          top: 35px;
+        }
+
+        .gallery-floating-two {
+          right: 22px;
+          top: 105px;
+          animation-delay: -1s;
+        }
+
+        .gallery-floating-three {
+          left: 35px;
+          bottom: 120px;
+          animation-delay: -1.7s;
+        }
+
+        .gallery-number {
+          position: absolute;
+          top: 15px;
+          left: 15px;
+          z-index: 8;
+          width: 42px;
+          height: 42px;
+          display: grid;
+          place-items: center;
+          border:
+            1px solid
+            rgba(255, 255, 255, 0.7);
+          background:
+            rgba(8, 8, 8, 0.55);
+          color: #fff;
+          font:
+            700 11px/1
+            Arial,
+            sans-serif;
+          letter-spacing: 0.14em;
+          backdrop-filter: blur(8px);
+          animation:
+            galleryNumber
+            2.4s
+            ease-in-out
+            infinite;
+        }
+
+        .gallery-vfx-line {
+          position: absolute;
+          top: 72px;
+          left: 16px;
+          z-index: 8;
+          width: 58px;
+          height: 3px;
+          background:
+            linear-gradient(
+              90deg,
+              #d5ac60,
+              #fff,
+              #d5ac60
+            );
+          transform-origin: left center;
+          animation:
+            galleryLine
+            1.8s
+            ease-in-out
+            infinite;
+          box-shadow:
+            0 0 15px
+            rgba(213, 172, 96, 0.8);
         }
 
         .gallery-info {
-          position: relative;
-          padding: 14px 15px 16px;
-          background: #fffdf8;
-          color: #171717;
-          text-align: left;
-          transition: transform 0.4s ease, background 0.4s ease;
-        }
-
-        .gallery-caption-title {
-          display: block;
-          color: #171717;
-          font-family: Georgia, serif;
-          font-size: 17px;
-          font-weight: 600;
-          letter-spacing: 0.2px;
-          margin-bottom: 5px;
-        }
-
-        .gallery-caption-text {
-          display: block;
-          margin-top: 0;
-          color: #6c675f;
-          font-size: 12px;
-          font-weight: 400;
-          line-height: 1.5;
-          opacity: 1;
-          transform: translateY(0);
-          transition: color 0.4s ease, transform 0.4s ease;
+          position: absolute;
+          left: 18px;
+          right: 18px;
+          bottom: 18px;
+          z-index: 9;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          transition:
+            transform 0.4s ease;
         }
 
         .gallery-item:hover .gallery-info {
-          background: #f7f4ed;
+          transform: translateY(-7px);
         }
 
-        .gallery-item:hover .gallery-caption-text {
-          color: #8b6a36;
-          transform: translateY(-2px);
+        .gallery-tag {
+          color: #e2bd76;
+          font:
+            800 9px/1.2
+            Arial,
+            sans-serif;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+        }
+
+        .gallery-caption-title {
+          color: #fff;
+          font:
+            700 clamp(18px, 1.55vw, 25px)/1.08
+            Georgia,
+            serif;
+        }
+
+        .gallery-caption-text {
+          color:
+            rgba(255, 255, 255, 0.88);
+          font:
+            400 12px/1.5
+            Arial,
+            sans-serif;
+          max-width: 95%;
+        }
+
+        @keyframes galleryFloat {
+          0%,
+          100% {
+            transform:
+              translateY(0)
+              rotate(0deg);
+          }
+
+          50% {
+            transform:
+              translateY(-13px)
+              rotate(0.5deg);
+          }
+        }
+
+        @keyframes galleryIconFloat {
+          0%,
+          100% {
+            transform:
+              translateY(0)
+              scale(1)
+              rotate(0deg);
+          }
+
+          50% {
+            transform:
+              translateY(-14px)
+              scale(1.08)
+              rotate(5deg);
+          }
+        }
+
+        @keyframes gallerySmallFloat {
+          0%,
+          100% {
+            transform:
+              translateY(0)
+              rotate(0deg);
+          }
+
+          50% {
+            transform:
+              translateY(-16px)
+              rotate(12deg);
+          }
+        }
+
+        @keyframes galleryCircle {
+          from {
+            transform:
+              rotate(0deg)
+              scale(1);
+          }
+
+          50% {
+            transform:
+              rotate(180deg)
+              scale(1.12);
+          }
+
+          to {
+            transform:
+              rotate(360deg)
+              scale(1);
+          }
+        }
+
+        @keyframes galleryCircleReverse {
+          from {
+            transform:
+              rotate(360deg)
+              scale(1);
+          }
+
+          50% {
+            transform:
+              rotate(180deg)
+              scale(0.88);
+          }
+
+          to {
+            transform:
+              rotate(0deg)
+              scale(1);
+          }
+        }
+
+        @keyframes galleryShine {
+          0% {
+            background-position: 150% 0;
+          }
+
+          100% {
+            background-position: -150% 0;
+          }
+        }
+
+        @keyframes galleryLine {
+          0%,
+          100% {
+            transform: scaleX(0.4);
+            opacity: 0.45;
+          }
+
+          50% {
+            transform: scaleX(1.6);
+            opacity: 1;
+          }
+        }
+
+        @keyframes galleryNumber {
+          0%,
+          100% {
+            transform: scale(1);
+          }
+
+          50% {
+            transform: scale(1.1);
+          }
+        }
+
+        @keyframes galleryStar {
+          0%,
+          100% {
+            transform:
+              scale(0.7)
+              rotate(0deg);
+            opacity: 0.4;
+          }
+
+          50% {
+            transform:
+              scale(1.3)
+              rotate(180deg);
+            opacity: 1;
+          }
+        }
+
+        @keyframes galleryRotate {
+          from {
+            transform: rotate(0deg);
+          }
+
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        @keyframes galleryRotateReverse {
+          from {
+            transform: rotate(360deg);
+          }
+
+          to {
+            transform: rotate(0deg);
+          }
         }
 
         /* ==============================
@@ -1607,10 +2099,13 @@ export default function App() {
 
         .footer-grid {
           display: grid;
-          grid-template-columns: 1.3fr 0.8fr 0.8fr 1fr;
+          grid-template-columns:
+            1.3fr 0.8fr 0.8fr 1fr;
           gap: 35px;
           padding-bottom: 20px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          border-bottom:
+            1px solid
+            rgba(255, 255, 255, 0.1);
         }
 
         .footer h3 {
@@ -1678,7 +2173,9 @@ export default function App() {
           background: #25d366;
           color: #fff;
           font-size: 27px;
-          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+          box-shadow:
+            0 8px 25px
+            rgba(0, 0, 0, 0.25);
         }
 
         /* ==============================
@@ -1811,31 +2308,28 @@ export default function App() {
           }
 
           .doctor-grid {
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns:
+              repeat(3, 1fr);
           }
 
           .department-grid {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns:
+              repeat(2, 1fr);
           }
 
           .facility-grid {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns:
+              repeat(2, 1fr);
           }
 
           .gallery-grid {
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns:
+              repeat(3, 1fr);
           }
 
           .footer-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .facility-card,
-          .gallery-item {
-            animation: none !important;
-            transition: none !important;
+            grid-template-columns:
+              repeat(2, 1fr);
           }
         }
 
@@ -1916,7 +2410,8 @@ export default function App() {
           }
 
           .stats-grid {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns:
+              repeat(2, 1fr);
           }
 
           .stat:nth-child(2) {
@@ -1924,7 +2419,8 @@ export default function App() {
           }
 
           .service-grid {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns:
+              repeat(2, 1fr);
           }
 
           .contact-grid {
@@ -1932,10 +2428,64 @@ export default function App() {
           }
         }
 
+        @media (max-width: 760px) {
+          .gallery-grid {
+            grid-template-columns:
+              repeat(2, 1fr);
+            gap: 13px;
+          }
+
+          .gallery-item {
+            min-height: 280px;
+          }
+
+          .gallery-medical-icon {
+            width: 95px;
+            height: 95px;
+            font-size: 48px;
+          }
+
+          .gallery-visual::before {
+            width: 155px;
+            height: 155px;
+          }
+
+          .gallery-visual::after {
+            width: 105px;
+            height: 105px;
+          }
+
+          .gallery-caption-text {
+            font-size: 11px;
+          }
+
+          .gallery-number {
+            width: 36px;
+            height: 36px;
+            top: 12px;
+            left: 12px;
+          }
+
+          .gallery-vfx-line {
+            top: 62px;
+            left: 13px;
+            width: 45px;
+          }
+
+          .gallery-info {
+            left: 13px;
+            right: 13px;
+            bottom: 13px;
+          }
+        }
+
         @media (max-width: 650px) {
           .container,
           .hero-content {
-            width: min(100% - 30px, 1320px);
+            width: min(
+              100% - 30px,
+              1320px
+            );
           }
 
           .section {
@@ -1981,14 +2531,6 @@ export default function App() {
 
           .doctor-image {
             height: 350px;
-          }
-
-          .gallery-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-
-          .gallery-item img {
-            height: 180px;
           }
 
           .footer-grid {
@@ -2062,6 +2604,42 @@ export default function App() {
             max-width: 100%;
             white-space: normal;
           }
+
+          .gallery-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .gallery-item {
+            min-height: 300px;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          main .reveal-up {
+            opacity: 1;
+            transform: none;
+            filter: none;
+            transition: none;
+          }
+
+          main img,
+          .facility-card {
+            animation: none !important;
+            transition: none !important;
+          }
+
+          .gallery-item,
+          .gallery-visual::before,
+          .gallery-visual::after,
+          .gallery-medical-icon,
+          .gallery-floating-icon,
+          .gallery-item::before,
+          .gallery-number,
+          .gallery-vfx-line,
+          .gallery::before,
+          .gallery::after {
+            animation-play-state: running !important;
+          }
         }
       `}</style>
 
@@ -2089,6 +2667,7 @@ export default function App() {
 
       <header className="header">
         <div className="container nav">
+
           <button
             className="logo"
             onClick={() => scrollTo("home")}
@@ -2099,10 +2678,14 @@ export default function App() {
               padding: 0,
             }}
           >
-            <div className="logo-symbol">✚</div>
+            <div className="logo-symbol">
+              ✚
+            </div>
 
             <div className="logo-text">
-              <div className="logo-name">{hospital.name}</div>
+              <div className="logo-name">
+                {hospital.name}
+              </div>
 
               <div className="logo-sub">
                 Multispeciality Hospital
@@ -2112,40 +2695,68 @@ export default function App() {
 
           <button
             className="menu-toggle"
-            onClick={() => setMobileMenu(!mobileMenu)}
+            onClick={() =>
+              setMobileMenu(!mobileMenu)
+            }
             aria-label="Open menu"
           >
             {mobileMenu ? "×" : "☰"}
           </button>
 
-          <nav className={`nav-links ${mobileMenu ? "open" : ""}`}>
-            <button onClick={() => scrollTo("home")}>Home</button>
+          <nav
+            className={`nav-links ${
+              mobileMenu ? "open" : ""
+            }`}
+          >
+            <button
+              onClick={() => scrollTo("home")}
+            >
+              Home
+            </button>
 
-            <button onClick={() => scrollTo("about")}>
+            <button
+              onClick={() => scrollTo("about")}
+            >
               About
             </button>
 
-            <button onClick={() => scrollTo("departments")}>
+            <button
+              onClick={() =>
+                scrollTo("departments")
+              }
+            >
               Departments
             </button>
 
-            <button onClick={() => scrollTo("doctors")}>
+            <button
+              onClick={() => scrollTo("doctors")}
+            >
               Doctors
             </button>
 
-            <button onClick={() => scrollTo("services")}>
+            <button
+              onClick={() => scrollTo("services")}
+            >
               Services
             </button>
 
-            <button onClick={() => scrollTo("facilities")}>
+            <button
+              onClick={() =>
+                scrollTo("facilities")
+              }
+            >
               Facilities
             </button>
 
-            <button onClick={() => scrollTo("gallery")}>
+            <button
+              onClick={() => scrollTo("gallery")}
+            >
               Gallery
             </button>
 
-            <button onClick={() => scrollTo("contact")}>
+            <button
+              onClick={() => scrollTo("contact")}
+            >
               Contact
             </button>
 
@@ -2163,434 +2774,691 @@ export default function App() {
       </header>
 
       {/* ==============================
-          HOME
+          MAIN CONTENT
       ============================== */}
 
-      <section id="home" className="hero">
-        <img
-          src={heroImage}
-          alt="RichieCare Hospital"
-          className="hero-image"
-          onError={handleImageError}
-        />
+      <main>
 
-        <div className="hero-overlay"></div>
+        {/* ==============================
+            HOME
+        ============================== */}
 
-        <div className="hero-content">
-          <div className="hero-kicker">
-            Excellence in Healthcare
-          </div>
+        <section
+          id="home"
+          className="hero"
+        >
+          <img
+            src={heroImage}
+            alt="RichieCare Hospital"
+            className="hero-image"
+            onError={handleImageError}
+          />
 
-          <h1>
-            <Lines
-              lines={[
-                "Compassionate care.",
-                "Advanced medicine.",
-                "Better health.",
-              ]}
-            />
-          </h1>
+          <div className="hero-overlay"></div>
 
-          <div className="hero-description">
-            <Lines
-              lines={[
-                "RichieCare Multispeciality Hospital brings together",
-                "experienced doctors, advanced technology and",
-                "patient-focused care under one roof.",
-              ]}
-            />
-          </div>
-
-          <div className="hero-buttons">
-            <button
-              className="btn btn-gold"
-              onClick={() => setShowAppointment(true)}
-            >
-              Book an Appointment
-            </button>
-
-            <button
-              className="btn btn-light"
-              onClick={() => scrollTo("departments")}
-            >
-              Explore Departments
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* ==============================
-          FEATURED DOCTOR
-      ============================== */}
-
-      <section className="featured-doctor">
-        <div className="container featured-inner">
-          <div className="featured-left">
-            <img
-              src={doctors[0].image}
-              alt={doctors[0].name}
-              className="featured-image"
-              onError={handleImageError}
-            />
-
-            <div>
-              <div className="featured-name">
-                {doctors[0].name}
-              </div>
-
-              <div className="featured-specialty">
-                {doctors[0].specialty}
-              </div>
+          <div className="hero-content">
+            <div className="hero-kicker">
+              Excellence in Healthcare
             </div>
-          </div>
 
-          <div className="featured-right">
-            <small>Featured Specialist</small>
+            <h1>
+              <Lines
+                lines={[
+                  "Compassionate care.",
+                  "Advanced medicine.",
+                  "Better health.",
+                ]}
+              />
+            </h1>
 
-            <button
-              className="btn btn-gold"
-              onClick={() => scrollTo("doctors")}
-            >
-              Meet Our Doctors
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* ==============================
-          ABOUT
-      ============================== */}
-
-      <section id="about" className="section about-section">
-        <div className="container">
-          <div className="about-grid">
-            <div className="about-image-wrap">
-              <img
-                src={aboutImage}
-                alt="RichieCare medical care"
-                className="about-image"
-                onClick={() => setSelectedImage(aboutImage)}
-                onError={handleImageError}
+            <div className="hero-description">
+              <Lines
+                lines={[
+                  "RichieCare Multispeciality Hospital brings together",
+                  "experienced doctors, advanced technology and",
+                  "patient-focused care under one roof.",
+                ]}
               />
             </div>
 
-            <div className="about-content">
-              <div className="eyebrow">About RichieCare</div>
+            <div className="hero-buttons">
+              <button
+                className="btn btn-gold"
+                onClick={() =>
+                  setShowAppointment(true)
+                }
+              >
+                Book an Appointment
+              </button>
 
-              <h2 className="about-main-heading">
+              <button
+                className="btn btn-light"
+                onClick={() =>
+                  scrollTo("departments")
+                }
+              >
+                Explore Departments
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* ==============================
+            FEATURED DOCTOR
+        ============================== */}
+
+        <section className="featured-doctor">
+          <div className="container featured-inner">
+
+            <div className="featured-left">
+              <img
+                src={doctors[0].image}
+                alt={doctors[0].name}
+                className="featured-image"
+                onError={handleImageError}
+              />
+
+              <div>
+                <div className="featured-name">
+                  {doctors[0].name}
+                </div>
+
+                <div className="featured-specialty">
+                  {doctors[0].specialty}
+                </div>
+              </div>
+            </div>
+
+            <div className="featured-right">
+              <small>
+                Featured Specialist
+              </small>
+
+              <button
+                className="btn btn-gold"
+                onClick={() =>
+                  scrollTo("doctors")
+                }
+              >
+                Meet Our Doctors
+              </button>
+            </div>
+
+          </div>
+        </section>
+
+        {/* ==============================
+            ABOUT
+        ============================== */}
+
+        <section
+          id="about"
+          className="section about-section"
+        >
+          <div className="container">
+
+            <div className="about-grid">
+
+              <div className="about-image-wrap">
+                <img
+                  src={aboutImage}
+                  alt="RichieCare medical care"
+                  className="about-image"
+                  onClick={() =>
+                    setSelectedImage(aboutImage)
+                  }
+                  onError={handleImageError}
+                />
+              </div>
+
+              <div className="about-content">
+
+                <div className="eyebrow">
+                  About RichieCare
+                </div>
+
+                <h2 className="about-main-heading">
+                  <Lines
+                    lines={[
+                      "Your health deserves",
+                      "the right care.",
+                    ]}
+                  />
+                </h2>
+
+                <div className="about-text">
+                  <Lines
+                    lines={[
+                      "RichieCare Multispeciality Hospital is built around",
+                      "one simple principle — every patient deserves",
+                      "expert medical attention with compassion.",
+                      "",
+                      "Our hospital brings together specialised doctors,",
+                      "modern technology and comfortable facilities to",
+                      "provide complete healthcare for every family.",
+                    ]}
+                  />
+                </div>
+
+                <div className="about-points">
+
+                  <div className="about-point">
+                    <span>✓</span>
+                    Experienced Specialists
+                  </div>
+
+                  <div className="about-point">
+                    <span>✓</span>
+                    Advanced Technology
+                  </div>
+
+                  <div className="about-point">
+                    <span>✓</span>
+                    Patient-Centred Care
+                  </div>
+
+                  <div className="about-point">
+                    <span>✓</span>
+                    24/7 Support
+                  </div>
+
+                </div>
+
+                <div
+                  style={{
+                    marginTop: "25px",
+                  }}
+                >
+                  <button
+                    className="btn btn-gold"
+                    onClick={() =>
+                      scrollTo("contact")
+                    }
+                  >
+                    Contact Our Team
+                  </button>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* ==============================
+            STATS
+        ============================== */}
+
+        <section className="stats">
+          <div className="container stats-grid">
+
+            <div className="stat">
+              <div className="stat-number">
+                24/7
+              </div>
+
+              <div className="stat-label">
+                Emergency Care
+              </div>
+            </div>
+
+            <div className="stat">
+              <div className="stat-number">
+                20+
+              </div>
+
+              <div className="stat-label">
+                Medical Experts
+              </div>
+            </div>
+
+            <div className="stat">
+              <div className="stat-number">
+                10+
+              </div>
+
+              <div className="stat-label">
+                Departments
+              </div>
+            </div>
+
+            <div className="stat">
+              <div className="stat-number">
+                15+
+              </div>
+
+              <div className="stat-label">
+                Years of Care
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* ==============================
+            DEPARTMENTS
+        ============================== */}
+
+        <section
+          id="departments"
+          className="section departments"
+        >
+          <div className="container">
+
+            <div className="section-heading center">
+
+              <div className="eyebrow">
+                Medical Departments
+              </div>
+
+              <h2>
                 <Lines
                   lines={[
-                    "Your health deserves",
-                    "the right care.",
+                    "Comprehensive medical specialties.",
                   ]}
                 />
               </h2>
 
-              <div className="about-text">
+              <p>
                 <Lines
                   lines={[
-                    "RichieCare Multispeciality Hospital is built around",
-                    "one simple principle — every patient deserves",
-                    "expert medical attention with compassion.",
-                    "",
-                    "Our hospital brings together specialised doctors,",
-                    "modern technology and comfortable facilities to",
-                    "provide complete healthcare for every family.",
+                    "Specialised medical departments working together",
+                    "for complete patient care.",
                   ]}
                 />
-              </div>
+              </p>
 
-              <div className="about-points">
-                <div className="about-point">
-                  <span>✓</span>
-                  Experienced Specialists
-                </div>
+            </div>
 
-                <div className="about-point">
-                  <span>✓</span>
-                  Advanced Technology
-                </div>
+            <div className="department-grid">
 
-                <div className="about-point">
-                  <span>✓</span>
-                  Patient-Centred Care
-                </div>
+              {departments.map(
+                (department) => (
+                  <div
+                    className="department-card"
+                    key={department.title}
+                  >
 
-                <div className="about-point">
-                  <span>✓</span>
-                  24/7 Support
-                </div>
-              </div>
+                    <div className="department-icon">
+                      {department.icon}
+                    </div>
 
-              <div style={{ marginTop: "25px" }}>
-                <button
-                  className="btn btn-gold"
-                  onClick={() => scrollTo("contact")}
-                >
-                  Contact Our Team
-                </button>
-              </div>
+                    <h3>
+                      <Lines
+                        lines={[
+                          department.title,
+                        ]}
+                      />
+                    </h3>
+
+                    <p>
+                      <Lines
+                        lines={
+                          department.description
+                        }
+                      />
+                    </p>
+
+                  </div>
+                )
+              )}
+
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ==============================
-          STATS
-      ============================== */}
+        {/* ==============================
+            DOCTORS
+        ============================== */}
 
-      <section className="stats">
-        <div className="container stats-grid">
-          <div className="stat">
-            <div className="stat-number">24/7</div>
-            <div className="stat-label">Emergency Care</div>
-          </div>
+        <section
+          id="doctors"
+          className="section doctors"
+        >
+          <div className="container">
 
-          <div className="stat">
-            <div className="stat-number">20+</div>
-            <div className="stat-label">Medical Experts</div>
-          </div>
+            <div className="section-heading">
 
-          <div className="stat">
-            <div className="stat-number">10+</div>
-            <div className="stat-label">Departments</div>
-          </div>
-
-          <div className="stat">
-            <div className="stat-number">15+</div>
-            <div className="stat-label">Years of Care</div>
-          </div>
-        </div>
-      </section>
-
-      {/* ==============================
-          DEPARTMENTS
-      ============================== */}
-
-      <section id="departments" className="section departments">
-        <div className="container">
-          <div className="section-heading center">
-            <div className="eyebrow">Medical Departments</div>
-
-            <h2>
-              <Lines
-                lines={[
-                  "Comprehensive medical specialties.",
-                ]}
-              />
-            </h2>
-
-            <p>
-              <Lines
-                lines={[
-                  "Specialised medical departments working together",
-                  "for complete patient care.",
-                ]}
-              />
-            </p>
-          </div>
-
-          <div className="department-grid">
-            {departments.map((department) => (
-              <div
-                className="department-card"
-                key={department.title}
-              >
-                <div className="department-icon">
-                  {department.icon}
-                </div>
-
-                <h3>
-                  <Lines lines={[department.title]} />
-                </h3>
-
-                <p>
-                  <Lines lines={department.description} />
-                </p>
+              <div className="eyebrow">
+                Our Specialists
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ==============================
-          DOCTORS
-      ============================== */}
-
-      <section id="doctors" className="section doctors">
-        <div className="container">
-          <div className="section-heading">
-            <div className="eyebrow">Our Specialists</div>
-
-            <h2>
-              <Lines
-                lines={[
-                  "Experienced doctors.",
-                  "Personalised care.",
-                ]}
-              />
-            </h2>
-
-            <p>
-              <Lines
-                lines={[
-                  "Meet our experienced medical professionals",
-                  "dedicated to patient-focused healthcare.",
-                ]}
-              />
-            </p>
-          </div>
-
-          <div className="doctor-grid">
-            {doctors.map((doctor) => (
-              <div className="doctor-card" key={doctor.name}>
-                <img
-                  src={doctor.image}
-                  alt={doctor.name}
-                  className="doctor-image"
-                  onClick={() => setSelectedImage(doctor.image)}
-                  onError={handleImageError}
+              <h2>
+                <Lines
+                  lines={[
+                    "Experienced doctors.",
+                    "Personalised care.",
+                  ]}
                 />
+              </h2>
 
-                <div className="doctor-content">
-                  <h3>
-                    <Lines lines={[doctor.name]} />
-                  </h3>
+              <p>
+                <Lines
+                  lines={[
+                    "Meet our experienced medical professionals",
+                    "dedicated to patient-focused healthcare.",
+                  ]}
+                />
+              </p>
 
-                  <div className="doctor-specialty">
-                    {doctor.specialty}
-                  </div>
+            </div>
 
-                  <div className="doctor-description">
-                    <Lines lines={doctor.description} />
+            <div className="doctor-grid">
+
+              {doctors.map((doctor) => (
+                <div
+                  className="doctor-card"
+                  key={doctor.name}
+                >
+
+                  <img
+                    src={doctor.image}
+                    alt={doctor.name}
+                    className="doctor-image"
+                    onClick={() =>
+                      setSelectedImage(
+                        doctor.image
+                      )
+                    }
+                    onError={handleImageError}
+                  />
+
+                  <div className="doctor-content">
+
+                    <h3>
+                      <Lines
+                        lines={[doctor.name]}
+                      />
+                    </h3>
+
+                    <div className="doctor-specialty">
+                      {doctor.specialty}
+                    </div>
+
+                    <div className="doctor-description">
+                      <Lines
+                        lines={
+                          doctor.description
+                        }
+                      />
+                    </div>
+
                   </div>
                 </div>
+              ))}
+
+            </div>
+          </div>
+        </section>
+
+        {/* ==============================
+            SERVICES
+        ============================== */}
+
+        <section
+          id="services"
+          className="section services"
+        >
+          <div className="container">
+
+            <div className="section-heading center">
+
+              <div className="eyebrow">
+                Healthcare Services
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ==============================
-          SERVICES
-      ============================== */}
-
-      <section id="services" className="section services">
-        <div className="container">
-          <div className="section-heading center">
-            <div className="eyebrow">Healthcare Services</div>
-
-            <h2>
-              <Lines
-                lines={[
-                  "Complete care.",
-                  "One trusted hospital.",
-                ]}
-              />
-            </h2>
-
-            <p>
-              <Lines
-                lines={[
-                  "From emergency care to advanced treatment,",
-                  "our services are designed around your needs.",
-                ]}
-              />
-            </p>
-          </div>
-
-          <div className="service-grid">
-            {services.map((service) => (
-              <div className="service-card" key={service.title}>
-                <div className="service-icon">
-                  {service.icon}
-                </div>
-
-                <h3>
-                  <Lines lines={[service.title]} />
-                </h3>
-
-                <p>
-                  <Lines lines={service.description} />
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ==============================
-          FACILITIES
-      ============================== */}
-
-      <section id="facilities" className="section facilities">
-        <div className="container">
-          <div className="section-heading center">
-            <div className="eyebrow">Hospital Facilities</div>
-
-            <h2>
-              <Lines
-                lines={[
-                  "Designed for comfort.",
-                  "Built for better care.",
-                ]}
-              />
-            </h2>
-
-            <p>
-              <Lines
-                lines={[
-                  "Modern hospital facilities supporting patients",
-                  "through every stage of their healthcare journey.",
-                ]}
-              />
-            </p>
-          </div>
-
-          <div className="facility-grid">
-            {facilities.map((facility) => (
-              <div
-                className="facility-card"
-                key={facility.title}
-              >
-                <img
-                  src={facility.image}
-                  alt={facility.title}
-                  className="facility-image"
-                  onClick={() =>
-                    setSelectedImage(facility.image)
-                  }
-                  onError={handleImageError}
+              <h2>
+                <Lines
+                  lines={[
+                    "Complete care.",
+                    "One trusted hospital.",
+                  ]}
                 />
+              </h2>
 
-                <div className="facility-content">
+              <p>
+                <Lines
+                  lines={[
+                    "From emergency care to advanced treatment,",
+                    "our services are designed around your needs.",
+                  ]}
+                />
+              </p>
+
+            </div>
+
+            <div className="service-grid">
+
+              {services.map((service) => (
+                <div
+                  className="service-card"
+                  key={service.title}
+                >
+
+                  <div className="service-icon">
+                    {service.icon}
+                  </div>
+
                   <h3>
-                    <Lines lines={[facility.title]} />
+                    <Lines
+                      lines={[
+                        service.title,
+                      ]}
+                    />
                   </h3>
 
                   <p>
-                    <Lines lines={facility.description} />
+                    <Lines
+                      lines={
+                        service.description
+                      }
+                    />
                   </p>
+
                 </div>
-              </div>
-            ))}
+              ))}
+
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ==============================
-          GALLERY
-      ============================== */}
+        {/* ==============================
+            FACILITIES
+        ============================== */}
 
-      <section id="gallery" className="section gallery">
-        <div className="container">
-          <div className="section-heading center">
-            <div className="eyebrow">Hospital Gallery</div>
+        <section
+          id="facilities"
+          className="section facilities"
+        >
+          <div className="container">
+
+            <div className="section-heading center">
+
+              <div className="eyebrow">
+                Hospital Facilities
+              </div>
+
+              <h2>
+                <Lines
+                  lines={[
+                    "Designed for comfort.",
+                    "Built for better care.",
+                  ]}
+                />
+              </h2>
+
+              <p>
+                <Lines
+                  lines={[
+                    "Modern hospital facilities supporting patients",
+                    "through every stage of their healthcare journey.",
+                  ]}
+                />
+              </p>
+
+            </div>
+
+            <div className="facility-grid">
+
+              {facilities.map(
+                (facility) => (
+                  <div
+                    className="facility-card"
+                    key={facility.title}
+                  >
+
+                    <img
+                      src={facility.image}
+                      alt={facility.title}
+                      className="facility-image"
+                      onClick={() =>
+                        setSelectedImage(
+                          facility.image
+                        )
+                      }
+                      onError={handleImageError}
+                    />
+
+                    <div className="facility-content">
+
+                      <h3>
+                        <Lines
+                          lines={[
+                            facility.title,
+                          ]}
+                        />
+                      </h3>
+
+                      <p>
+                        <Lines
+                          lines={
+                            facility.description
+                          }
+                        />
+                      </p>
+
+                    </div>
+
+                  </div>
+                )
+              )}
+
+            </div>
+          </div>
+        </section>
+
+        {/* ==============================
+            GALLERY
+        ============================== */}
+
+        <section
+          id="gallery"
+          className="section gallery"
+        >
+          <div className="container">
+
+            <div className="section-heading center">
+
+              <div className="eyebrow">
+                Hospital Gallery
+              </div>
+
+              <h2>
+                <Lines
+                  lines={[
+                    "Experience RichieCare in motion.",
+                  ]}
+                />
+              </h2>
+
+              <p>
+                <Lines
+                  lines={[
+                    "Take a closer look at the spaces, people and moments",
+                    "that make RichieCare a welcoming place for healthcare.",
+                  ]}
+                />
+              </p>
+
+            </div>
+
+            <div className="gallery-grid">
+
+              {gallery.map(
+                (item, index) => (
+                  <div
+                    className="gallery-item"
+                    key={item.title}
+                  >
+
+                    <div className="gallery-visual">
+
+                      <div className="gallery-medical-icon">
+                        {item.icon}
+                      </div>
+
+                    </div>
+
+                    <span className="gallery-floating-icon gallery-floating-one">
+                      ✚
+                    </span>
+
+                    <span className="gallery-floating-icon gallery-floating-two">
+                      ❤️
+                    </span>
+
+                    <span className="gallery-floating-icon gallery-floating-three">
+                      ✦
+                    </span>
+
+                    <span className="gallery-number">
+                      {String(index + 1).padStart(
+                        2,
+                        "0"
+                      )}
+                    </span>
+
+                    <span className="gallery-vfx-line"></span>
+
+                    <div className="gallery-info">
+
+                      <span className="gallery-tag">
+                        {item.tag}
+                      </span>
+
+                      <span className="gallery-caption-title">
+                        {item.title}
+                      </span>
+
+                      <span className="gallery-caption-text">
+                        {item.text}
+                      </span>
+
+                    </div>
+
+                  </div>
+                )
+              )}
+
+            </div>
+          </div>
+        </section>
+
+        {/* ==============================
+            CTA
+        ============================== */}
+
+        <section className="cta">
+          <div className="container">
+
+            <div className="eyebrow">
+              Your Health Matters
+            </div>
 
             <h2>
               <Lines
                 lines={[
-                  "Inside RichieCare.",
+                  "Care that puts you first.",
                 ]}
               />
             </h2>
@@ -2598,198 +3466,185 @@ export default function App() {
             <p>
               <Lines
                 lines={[
-                  "Explore our hospital environment, facilities",
-                  "and dedicated healthcare team.",
+                  "Speak with our medical team and take",
+                  "the next step towards better health.",
                 ]}
               />
             </p>
+
+            <button
+              className="btn btn-gold"
+              onClick={() =>
+                setShowAppointment(true)
+              }
+            >
+              Book Your Appointment
+            </button>
+
           </div>
+        </section>
 
-          <div className="gallery-grid">
-            {gallery.map((item) => (
-              <div
-                className="gallery-item"
-                key={item.title}
-                onClick={() => setSelectedImage(item.image)}
-              >
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  onError={handleImageError}
-                />
+        {/* ==============================
+            CONTACT
+        ============================== */}
 
-                <div className="gallery-info">
-                  <span className="gallery-caption-title">{item.title}</span>
-                  <span className="gallery-caption-text">
-                    A glimpse of our caring healthcare environment.
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        <section
+          id="contact"
+          className="section contact"
+        >
+          <div className="container">
 
-      {/* ==============================
-          CTA
-      ============================== */}
+            <div className="section-heading">
 
-      <section className="cta">
-        <div className="container">
-          <div className="eyebrow">Your Health Matters</div>
-
-          <h2>
-            <Lines
-              lines={[
-                "Care that puts you first.",
-              ]}
-            />
-          </h2>
-
-          <p>
-            <Lines
-              lines={[
-                "Speak with our medical team and take",
-                "the next step towards better health.",
-              ]}
-            />
-          </p>
-
-          <button
-            className="btn btn-gold"
-            onClick={() => setShowAppointment(true)}
-          >
-            Book Your Appointment
-          </button>
-        </div>
-      </section>
-
-      {/* ==============================
-          CONTACT
-      ============================== */}
-
-      <section id="contact" className="section contact">
-        <div className="container">
-          <div className="section-heading">
-            <div className="eyebrow">Contact RichieCare</div>
-
-            <h2>
-              <Lines
-                lines={[
-                  "We are here for you.",
-                ]}
-              />
-            </h2>
-          </div>
-
-          <div className="contact-grid">
-            <div className="contact-card">
-              <h3>
-                <Lines
-                  lines={[
-                    "Get in touch.",
-                  ]}
-                />
-              </h3>
-
-              <p>
-                <Lines
-                  lines={[
-                    "For appointments, consultations and general",
-                    "healthcare enquiries, contact our hospital team.",
-                  ]}
-                />
-              </p>
-
-              <div className="contact-details">
-                <div className="contact-detail">
-                  <div className="contact-icon">📍</div>
-
-                  <div>
-                    <strong>Hospital Address</strong>
-
-                    <span>
-                      <Lines
-                        lines={[
-                          hospital.address,
-                        ]}
-                      />
-                    </span>
-                  </div>
-                </div>
-
-                <div className="contact-detail">
-                  <div className="contact-icon">☎</div>
-
-                  <div>
-                    <strong>Phone</strong>
-
-                    <span>
-                      <Lines
-                        lines={[
-                          hospital.phone,
-                        ]}
-                      />
-                    </span>
-                  </div>
-                </div>
-
-                <div className="contact-detail">
-                  <div className="contact-icon">✉</div>
-
-                  <div>
-                    <strong>Email</strong>
-
-                    <span>
-                      <Lines
-                        lines={[
-                          hospital.email,
-                        ]}
-                      />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="emergency-card">
               <div className="eyebrow">
-                Emergency Services
+                Contact RichieCare
               </div>
 
-              <h3>
+              <h2>
                 <Lines
                   lines={[
-                    "Need urgent medical care?",
+                    "We are here for you.",
                   ]}
                 />
-              </h3>
+              </h2>
 
-              <p>
-                <Lines
-                  lines={[
-                    "Our emergency support team is available",
-                    "around the clock for urgent situations.",
-                  ]}
-                />
-              </p>
+            </div>
 
-              <div className="emergency-number">
-                {hospital.phone}
+            <div className="contact-grid">
+
+              <div className="contact-card">
+
+                <h3>
+                  <Lines
+                    lines={[
+                      "Get in touch.",
+                    ]}
+                  />
+                </h3>
+
+                <p>
+                  <Lines
+                    lines={[
+                      "For appointments, consultations and general",
+                      "healthcare enquiries, contact our hospital team.",
+                    ]}
+                  />
+                </p>
+
+                <div className="contact-details">
+
+                  <div className="contact-detail">
+
+                    <div className="contact-icon">
+                      📍
+                    </div>
+
+                    <div>
+                      <strong>
+                        Hospital Address
+                      </strong>
+
+                      <span>
+                        <Lines
+                          lines={[
+                            hospital.address,
+                          ]}
+                        />
+                      </span>
+                    </div>
+
+                  </div>
+
+                  <div className="contact-detail">
+
+                    <div className="contact-icon">
+                      ☎
+                    </div>
+
+                    <div>
+                      <strong>
+                        Phone
+                      </strong>
+
+                      <span>
+                        <Lines
+                          lines={[
+                            hospital.phone,
+                          ]}
+                        />
+                      </span>
+                    </div>
+
+                  </div>
+
+                  <div className="contact-detail">
+
+                    <div className="contact-icon">
+                      ✉
+                    </div>
+
+                    <div>
+                      <strong>
+                        Email
+                      </strong>
+
+                      <span>
+                        <Lines
+                          lines={[
+                            hospital.email,
+                          ]}
+                        />
+                      </span>
+                    </div>
+
+                  </div>
+
+                </div>
               </div>
 
-              <div>
-                <button
-                  className="btn btn-gold"
-                  onClick={openWhatsApp}
-                >
-                  WhatsApp Us
-                </button>
+              <div className="emergency-card">
+
+                <div className="eyebrow">
+                  Emergency Services
+                </div>
+
+                <h3>
+                  <Lines
+                    lines={[
+                      "Need urgent medical care?",
+                    ]}
+                  />
+                </h3>
+
+                <p>
+                  <Lines
+                    lines={[
+                      "Our emergency support team is available",
+                      "around the clock for urgent situations.",
+                    ]}
+                  />
+                </p>
+
+                <div className="emergency-number">
+                  {hospital.phone}
+                </div>
+
+                <div>
+                  <button
+                    className="btn btn-gold"
+                    onClick={openWhatsApp}
+                  >
+                    WhatsApp Us
+                  </button>
+                </div>
+
               </div>
+
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+      </main>
 
       {/* ==============================
           FOOTER
@@ -2797,9 +3652,13 @@ export default function App() {
 
       <footer className="footer">
         <div className="container">
+
           <div className="footer-grid">
+
             <div>
-              <h3>{hospital.name}</h3>
+              <h3>
+                {hospital.name}
+              </h3>
 
               <p>
                 <Lines
@@ -2813,51 +3672,93 @@ export default function App() {
             </div>
 
             <div>
-              <h3>Quick Links</h3>
+              <h3>
+                Quick Links
+              </h3>
 
               <div className="footer-links">
-                <button onClick={() => scrollTo("home")}>
+
+                <button
+                  onClick={() =>
+                    scrollTo("home")
+                  }
+                >
                   Home
                 </button>
 
-                <button onClick={() => scrollTo("about")}>
+                <button
+                  onClick={() =>
+                    scrollTo("about")
+                  }
+                >
                   About
                 </button>
 
-                <button onClick={() => scrollTo("departments")}>
+                <button
+                  onClick={() =>
+                    scrollTo("departments")
+                  }
+                >
                   Departments
                 </button>
 
-                <button onClick={() => scrollTo("doctors")}>
+                <button
+                  onClick={() =>
+                    scrollTo("doctors")
+                  }
+                >
                   Doctors
                 </button>
+
               </div>
             </div>
 
             <div>
-              <h3>Explore</h3>
+              <h3>
+                Explore
+              </h3>
 
               <div className="footer-links">
-                <button onClick={() => scrollTo("services")}>
+
+                <button
+                  onClick={() =>
+                    scrollTo("services")
+                  }
+                >
                   Services
                 </button>
 
-                <button onClick={() => scrollTo("facilities")}>
+                <button
+                  onClick={() =>
+                    scrollTo("facilities")
+                  }
+                >
                   Facilities
                 </button>
 
-                <button onClick={() => scrollTo("gallery")}>
+                <button
+                  onClick={() =>
+                    scrollTo("gallery")
+                  }
+                >
                   Gallery
                 </button>
 
-                <button onClick={() => scrollTo("contact")}>
+                <button
+                  onClick={() =>
+                    scrollTo("contact")
+                  }
+                >
                   Contact
                 </button>
+
               </div>
             </div>
 
             <div>
-              <h3>Contact</h3>
+              <h3>
+                Contact
+              </h3>
 
               <p>
                 <Lines
@@ -2869,12 +3770,14 @@ export default function App() {
                 />
               </p>
             </div>
+
           </div>
 
           <div className="footer-bottom">
+
             <div>
-              © 2026 RichieCare Multispeciality Hospital. All
-              Rights Reserved.
+              © 2026 RichieCare Multispeciality Hospital.
+              All Rights Reserved.
             </div>
 
             <div>
@@ -2887,6 +3790,7 @@ export default function App() {
                 Astroidea Softway LLP
               </a>
             </div>
+
           </div>
         </div>
       </footer>
@@ -2910,15 +3814,23 @@ export default function App() {
       {showAppointment && (
         <div
           className="modal-backdrop"
-          onClick={() => setShowAppointment(false)}
+          onClick={() =>
+            setShowAppointment(false)
+          }
         >
+
           <div
             className="appointment-modal"
-            onClick={(event) => event.stopPropagation()}
+            onClick={(event) =>
+              event.stopPropagation()
+            }
           >
+
             <button
               className="modal-close"
-              onClick={() => setShowAppointment(false)}
+              onClick={() =>
+                setShowAppointment(false)
+              }
             >
               ×
             </button>
@@ -2939,10 +3851,16 @@ export default function App() {
               />
             </p>
 
-            <form onSubmit={submitAppointment}>
+            <form
+              onSubmit={submitAppointment}
+            >
+
               <div className="form-grid">
+
                 <div className="form-group">
-                  <label>Full Name</label>
+                  <label>
+                    Full Name
+                  </label>
 
                   <input
                     type="text"
@@ -2952,7 +3870,9 @@ export default function App() {
                 </div>
 
                 <div className="form-group">
-                  <label>Phone Number</label>
+                  <label>
+                    Phone Number
+                  </label>
 
                   <input
                     type="tel"
@@ -2962,7 +3882,9 @@ export default function App() {
                 </div>
 
                 <div className="form-group">
-                  <label>Email Address</label>
+                  <label>
+                    Email Address
+                  </label>
 
                   <input
                     type="email"
@@ -2971,26 +3893,42 @@ export default function App() {
                 </div>
 
                 <div className="form-group">
-                  <label>Department</label>
+                  <label>
+                    Department
+                  </label>
 
-                  <select required defaultValue="">
-                    <option value="" disabled>
+                  <select
+                    required
+                    defaultValue=""
+                  >
+                    <option
+                      value=""
+                      disabled
+                    >
                       Select department
                     </option>
 
-                    {departments.map((department) => (
-                      <option
-                        value={department.title}
-                        key={department.title}
-                      >
-                        {department.title}
-                      </option>
-                    ))}
+                    {departments.map(
+                      (department) => (
+                        <option
+                          value={
+                            department.title
+                          }
+                          key={
+                            department.title
+                          }
+                        >
+                          {department.title}
+                        </option>
+                      )
+                    )}
                   </select>
                 </div>
 
                 <div className="form-group full">
-                  <label>Preferred Date</label>
+                  <label>
+                    Preferred Date
+                  </label>
 
                   <input
                     type="date"
@@ -2999,7 +3937,9 @@ export default function App() {
                 </div>
 
                 <div className="form-group full">
-                  <label>Message</label>
+                  <label>
+                    Message
+                  </label>
 
                   <textarea
                     placeholder="Tell us how we can help you"
@@ -3007,16 +3947,22 @@ export default function App() {
                 </div>
 
                 <div className="form-group full">
+
                   <button
                     type="submit"
                     className="btn btn-gold"
-                    style={{ width: "100%" }}
+                    style={{
+                      width: "100%",
+                    }}
                   >
                     Submit Appointment Request
                   </button>
+
                 </div>
+
               </div>
             </form>
+
           </div>
         </div>
       )}
@@ -3028,11 +3974,16 @@ export default function App() {
       {selectedImage && (
         <div
           className="lightbox"
-          onClick={() => setSelectedImage(null)}
+          onClick={() =>
+            setSelectedImage(null)
+          }
         >
+
           <button
             className="lightbox-close"
-            onClick={() => setSelectedImage(null)}
+            onClick={() =>
+              setSelectedImage(null)
+            }
           >
             ×
           </button>
@@ -3040,9 +3991,12 @@ export default function App() {
           <img
             src={selectedImage}
             alt="Hospital preview"
-            onClick={(event) => event.stopPropagation()}
+            onClick={(event) =>
+              event.stopPropagation()
+            }
             onError={handleImageError}
           />
+
         </div>
       )}
     </>
